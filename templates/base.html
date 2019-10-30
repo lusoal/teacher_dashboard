@@ -99,8 +99,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{url_for('professor_controller.cadastrar_professor')}}">Disciplina</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('professor_controller.cadastrar_professor')}}">Curso</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Curso
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{url_for('curso_controller.cadastrar_curso')}}">Cadastrar Curso</a>
+                        <a class="dropdown-item" href="{{url_for('curso_controller.listar_cursos')}}">Listar Cursos</a>
+                    </div>
                 </li>
             </ul>
         </div>

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title%}Cadastrar Curso{% endblock %}
+
+
+{% block content %}
+<form action="{{ url_for('curso_controller.cadastrar_curso') }}" method="post">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Nome do Curso</label>
+    <input type="text" class="form-control" name="nome" id="nome" placeholder="Digite o nome">
+  </div>
+  <button type="submit" class="btn btn-primary">Cadastrar</button>
+</form>
+{% endblock %}
