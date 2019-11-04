@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title%}Cadastrar Curso{% endblock %}
+
+
+{% block content %}
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome do Curso</th>
+      <th scope="col">Turmas</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for key in cursos %}
+    <tr>
+      <th scope="row">{{ key.get('id') }}</th>
+      <td>{{ key.get('nome') }}</td>
+      <form action="/listar_cursos/" , method="POST">
+        <input type="hidden" name="turmas" value="{{ key.get('turmas') }}" id="turmas">
+        <td><button type="submit" class="btn btn-primary">Turmas</button></td>
+      </form>
+    </tr>
+
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

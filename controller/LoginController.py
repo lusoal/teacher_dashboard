@@ -22,12 +22,12 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        userType = "professor"
         try:
-            login_response = loginService.realizar_login(username, password, userType)
+            login_response = loginService.realizar_login(username, password)
             if (login_response):    
-                session['cookie'] = login_response.cookies.get_dict()
-                session['user_info'] = login_response.json()
+                session['cookie'] = login_response[0].cookies.get_dict()
+                session['user_info'] = login_response[0].json()
+                session['user_type'] = login_response[1]
                 return redirect(url_for('login_controller.menu', _external=True))
             else:
                 return redirect(url_for('login_controller.login', _external=True))
@@ -40,6 +40,6 @@ def login():
 @login_controller.route('/menu/', methods=['GET', 'POST'])
 def menu():
     if not session.get("cookie"):
-        return redirect(url_for('login_controller.login', _external=True))
+        return redirect(url_for('login_controller.login',  _external=True))
     print(session.get("cookie"))
     return render_template("menu.html", response = request.args.get('response'))
