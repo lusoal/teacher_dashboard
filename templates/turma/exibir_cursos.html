@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title%}Cadastrar Curso{% endblock %}
+
+
+{% block content %}
+{% if not turmas %}
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome do Curso</th>
+      <th scope="col">Turmas</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for key in cursos %}
+    <tr>
+      <th scope="row">{{ key.get('id') }}</th>
+      <td>{{ key.get('nome') }}</td>
+      <form action="/listar_cursos/" , method="POST">
+        <input type="hidden" name="turmas" value="{{ key.get('turmas') }}" id="turmas">
+        <td><button type="submit" class="btn btn-primary">Turmas</button></td>
+      </form>
+    </tr>
+
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome da Turma</th>
+      <th scope="col">Ano</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for turma in turmas %}
+    <tr>
+      <th scope="row">{{ turma.get('id') }}</th>
+      <th scope="row">{{ turma.get('nome') }}</th>
+      <th scope="row">{{ turma.get('ano')[:4] }}-{{ turma.get('ano')[4:6] }}-{{ turma.get('ano')[6:8] }}</th>
+    </tr>
+
+    {% endfor %}
+    {% endif %}
+    {% endblock %}

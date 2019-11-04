@@ -3,6 +3,7 @@ from flask import Flask, render_template, jsonify, \
 
 from controller.FilterController import filter_controller
 from controller.CursoController import curso_controller
+from controller.TurmaController import turma_controller
 from controller.ProfessorController import professor_controller
 from controller.LoginController import login_controller
 
@@ -20,6 +21,7 @@ class FlaskConfs(object):
     
     def register_blue_prints(self):
         self.app.register_blueprint(curso_controller)
+        self.app.register_blueprint(turma_controller)
         self.app.register_blueprint(filter_controller)
         self.app.register_blueprint(professor_controller)
         self.app.register_blueprint(login_controller)
