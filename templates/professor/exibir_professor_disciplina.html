@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title%}Cadastrar Curso{% endblock %}
+
+
+{% block content %}
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Dias Da Semana</th>
+      <th scope="col">Unidade</th>
+      <th scope="col">Turma</th>
+      <th scope="col">Aulas</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for disciplinas in dicplinas_do_professor %}
+    <tr>
+      <th scope="row">{{ disciplinas.get('disciplina').get('id') }}</th>
+      <th scope="row">{{ disciplinas.get('disciplina').get('disciplina').get('nome') }}</th>
+      <th scope="row">{{ disciplinas.get('disciplina').get('diasDaSemana') }}</th>
+      <th scope="row">{{ disciplinas.get('disciplina').get('unidade') }}</th>
+      <th scope="row">{{ disciplinas.get('turma') }}</th>
+      <form action="/professor/aulas/" , method="POST">
+        <input type="hidden" name="aulas" value="{{ disciplinas.get('disciplina').get('aulas') }}" id="aulas">
+        <td><button type="submit" class="btn btn-primary">Aulas</button></td>
+      </form>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
