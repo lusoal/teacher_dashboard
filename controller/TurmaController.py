@@ -6,11 +6,15 @@ import requests
 
 from service.TurmaService import TurmaService
 from service.CursoService import CursoService
+from service.ProfessorService import ProfessorService
+from service.DisciplinaService import DisciplinaService
 
 #Atributo
 turma_controller = Blueprint('turma_controller', __name__)
 turmaService = TurmaService()
 cursoService = CursoService()
+professorService = ProfessorService()
+disciplinaService = DisciplinaService()
 
 @turma_controller.route('/cadastrar_turma/', methods=['GET', 'POST'])
 def cadastrar_turma():
@@ -65,3 +69,26 @@ def listar_aulas_disciplina():
     aulas = eval(request.form['aulas'])
     print(aulas)
     return render_template("turma/listar_aulas.html", aulas=aulas)
+
+@turma_controller.route('/cadastrar_disciplina/', methods=['GET', 'POST'])
+def cadastrar_disciplina():
+    turma_id = int(request.form['turma_id'])
+    try:
+        professores = professorService.listar_professores(session.get("cookie"))
+        disciplinas = disciplinaService.listar_disciplinas()
+        return render_template("turma/cadastrar_disciplina.html", professores=professores, turma_id=turma_id, disciplinas=disciplinas)
+    except Exception as e:
+        return redirect(url_for('login_controller.menu', _external=True))
+
+@turma_controller.route('/cadastrar_disciplina_final/', methods=['GET', 'POST'])
+def cadastrar_disciplina_final():
+    turma_id = int(request.form['turma_id'])
+    professor_id = int(request.form['turma_id'])
+    disciplina_id = int(request.form['disciplina_id'])
+    dias_semana = request.form['dias_semana']
+
+    disciplinaService.cadastrar_disciplina()
+    print(turma_id, professor_id, disciplina_id, dias_semana)
+
+    print(disiplina_turma_id)
+    return render_template("turma/cadastrar_aula.html", disiplina_turma_id=disiplina_turma_id)

@@ -21,7 +21,7 @@
       <th scope="row">{{ turma.get('nome') }}</th>
       <th scope="row">{{ turma.get('ano')[:4] }}-{{ turma.get('ano')[4:6] }}-{{ turma.get('ano')[6:8] }}</th>
       <form action="/cadastrar_disciplina/" , method="POST">
-        <input type="hidden" name="turma" value="{{ turma }}" id="turma">
+        <input type="hidden" name="turma_id" value="{{ turma.get('id') }}" id="turma">
         <td><button type="submit" class="btn btn-primary">Cadastrar Disciplina</button></td>
       </form>
       <form action="/listar_disciplinas_turma/" , method="POST">

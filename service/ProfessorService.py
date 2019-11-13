@@ -66,4 +66,22 @@ class ProfessorService(object):
         url = pyqrcode.create(data, error='L', version=27, mode='binary')
         url.png("templates/static/qr_code_aula.png", scale=6, module_color=[0, 0, 0, 128], background=[0xff, 0xff, 0xcc])
         return True
+    
+    def listar_professores(self, cookie):
+        headers = {'content-type': "application/json"}
+        try:
+            session = requests.Session()
+            response = requests.get(f"http://{os.environ.get('URL_APPLICATION','localhost:8080')}/api/professores/", 
+                headers=headers, cookies=cookie)
+            
+            print(response.text)
+            
+            if (response.status_code == 200):
+                return response.json()
+            else:
+                raise Exception("Usuario ja cadastrado")
+        except Exception as e:
+            print(e)
+            raise e
+
         
