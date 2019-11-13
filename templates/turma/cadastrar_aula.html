@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title%}Cadastrar Curso{% endblock %}
+
+
+{% block content %}
+<form action="{{ url_for('turma_controller.cadastrar_aula') }}" method="post">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Data Aula</label>
+    <input type="text" class="form-control" name="data_aula" id="data_aula" placeholder="Digite a data da aula">
+  </div>
+  <input type="hidden" name="disiplina_turma_id" value="{{ disiplina_turma_id }}" id="disiplina_turma_id">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Horario Aula</label>
+    <input type="text" class="form-control" name="data_aula" id="data_aula" placeholder="Digite o horario da aula">
+  </div>
+  <button type="submit" class="btn btn-primary">Cadastrar</button>
+</form>
+{% endblock %}

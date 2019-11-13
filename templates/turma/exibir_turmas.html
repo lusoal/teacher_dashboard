@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title%}Cadastrar Curso{% endblock %}
+
+
+{% block content %}
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome da Turma</th>
+      <th scope="col">Ano</th>
+      <th scope="col">Cadastrar Turma</th>
+      <th scope="col">Listar Disciplinas</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for turma in turmas %}
+    <tr>
+      <th scope="row">{{ turma.get('id') }}</th>
+      <th scope="row">{{ turma.get('nome') }}</th>
+      <th scope="row">{{ turma.get('ano')[:4] }}-{{ turma.get('ano')[4:6] }}-{{ turma.get('ano')[6:8] }}</th>
+      <form action="/cadastrar_disciplina/" , method="POST">
+        <input type="hidden" name="turma" value="{{ turma }}" id="turma">
+        <td><button type="submit" class="btn btn-primary">Cadastrar Disciplina</button></td>
+      </form>
+      <form action="/listar_disciplinas_turma/" , method="POST">
+        <input type="hidden" name="turma" value="{{ turma }}" id="turma">
+        <td><button type="submit" class="btn btn-primary">Listar Disciplinas</button></td>
+      </form>
+    </tr>
+
+    {% endfor %}
+{% endblock %}

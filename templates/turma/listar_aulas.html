@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title%}Cadastrar Curso{% endblock %}
+
+
+{% block content %}
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Data</th>
+      <th scope="col">Horario</th>
+      <th scope="col">Ocorrida</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for aula in aulas %}
+    <tr>
+      <th scope="row">{{ aula.get('id') }}</th>
+      <th scope="row">{{ aula.get('data')[:4] }}-{{ aula.get('data')[4:6] }}-{{ aula.get('data')[6:8] }}</th>
+      <th scope="row">{{ aula.get('horario') }}</th>
+      {% if aula.get('ocorrida') %}
+        <th scope="row" bgcolor="#00FF00">Ja ocorreu</th>
+      {% else %}
+      <th scope="row" bgcolor="#FF0000">Nao ocorreu</th>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
