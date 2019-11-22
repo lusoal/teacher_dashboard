@@ -5,6 +5,7 @@ import ast
 import requests
 
 from service.TurmaService import TurmaService
+from service.AulaService import AulaService
 from service.CursoService import CursoService
 from service.ProfessorService import ProfessorService
 from service.DisciplinaService import DisciplinaService
@@ -12,6 +13,7 @@ from service.DisciplinaService import DisciplinaService
 #Atributo
 turma_controller = Blueprint('turma_controller', __name__)
 turmaService = TurmaService()
+aulaService = AulaService()
 cursoService = CursoService()
 professorService = ProfessorService()
 disciplinaService = DisciplinaService()
@@ -53,16 +55,26 @@ def listar_disciplinas_turma():
 
 @turma_controller.route('/cadastrar_aulas/', methods=['GET', 'POST'])
 def cadastrar_aulas():
-    disiplina_turma_id = int(request.form['disciplinas_turma_id'])
-    print(disiplina_turma_id)
-    return render_template("turma/cadastrar_aula.html", disiplina_turma_id=disiplina_turma_id)
+    disciplina_turma_id = int(request.form['disciplinas_turma_id'])
+    print(disciplina_turma_id)
+    return render_template("turma/cadastrar_aula.html", disciplina_turma_id=disciplina_turma_id)
 
 @turma_controller.route('/cadastrar_aula/', methods=['GET', 'POST'])
 def cadastrar_aula():
-    disiplina_turma_id = int(request.form['disciplinas_turma_id'])
-    print(disiplina_turma_id)
+    try:
+        disciplina_turma_id = request.form['disciplina_turma_id']
+        print(f"[INFO] Disciplina turma id: {disciplina_turma_id}")
+        data_aula = request.form['data_aula']
+        horario_aula = request.form['horario_aula']
+        response = aulaService.cadastrar_aula(disciplina_turma_id, data_aula, horario_aula, session.get("cookie"))
+        
+        return redirect(url_for('turma_controller.listar_turmas', response="Aula cadastrada", _external=True))
+    
+    except Exception as e:
+        print(f"Minha exception: {e}")
+        return redirect(url_for('turma_controller.listar_turmas', response="Erro: Curso já cadastrado", _external=True))
+    
 
-    return render_template("turma/cadastrar_aula.html", disiplina_turma_id=disiplina_turma_id)
 
 @turma_controller.route('/listar_aulas_disciplina/', methods=['GET', 'POST'])
 def listar_aulas_disciplina():
@@ -90,5 +102,5 @@ def cadastrar_disciplina_final():
     disciplinaService.cadastrar_disciplina()
     print(turma_id, professor_id, disciplina_id, dias_semana)
 
-    print(disiplina_turma_id)
-    return render_template("turma/cadastrar_aula.html", disiplina_turma_id=disiplina_turma_id)
+    print(disciplina_turma_id)
+    return render_template("turma/cadastrar_aula.html", disciplina_turma_id=disciplina_turma_id)

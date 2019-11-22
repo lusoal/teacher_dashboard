@@ -2,6 +2,7 @@ import requests
 import os
 import json
 
+#TODO: Alterar para disciplina turma pois disciplina e uma coisa diferente
 class DisciplinaService(object):
     
     def cadastrar_disciplina(self, professor_id, turma_id, disciplina_id, dias_da_semana, cookie):
