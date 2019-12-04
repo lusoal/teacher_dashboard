@@ -13,8 +13,11 @@ loginService = LoginService()
 @login_controller.route('/', methods=['GET'])
 def index():
     #TODO: Remover pop da sessao para utilizar o Logout, criar Logout no Java API
-    session.pop('cookie')
-    session.pop('user_info')
+    try:
+        session.pop('cookie')
+        session.pop('user_info')
+    except:
+        pass
     return redirect(url_for('login_controller.login', _external=True))
 
 @login_controller.route('/login/', methods=['GET', 'POST'])
