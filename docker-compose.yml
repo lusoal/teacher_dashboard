@@ -1,0 +1,47 @@
+version: '3.3'
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: my_sql_teacher
+    networks:
+      - project-network
+    volumes:
+       - /opt/data-mysql:/var/lib/mysql
+    environment:
+        MYSQL_DATABASE: jogoSo
+        MYSQL_ROOT_PASSWORD: root
+    ports:
+        - "3306:3306"
+  teacherApi:
+      depends_on:
+        - mysql
+      image: lusoal/teacher-api:latest
+      networks:
+        - project-network
+      ports:
+        - "8080:8080"
+      restart: always
+      environment:
+        MYSQL_HOST: mysql
+        MYSQL_DB_USERNAME: root
+        MYSQL_DB_PASSWORD: root
+        MYSQL_DATABASE: chamadaAlunos
+        HIBERNATE_HBM2LL: update
+  teacherDashboard:
+      depends_on:
+        - mysql
+        - teacherApi
+      image: lusoal/teacher-dashboard:latest
+      networks:
+        - project-network
+      ports:
+        - "5000:5000"
+      restart: always
+      volumes:
+        - ./:/app
+      environment:
+        URL_APPLICATION: teacherApi:8080
+networks:
+  project-network:
+    driver: bridge
+  
