@@ -1,7 +1,6 @@
 import requests
 import os
-import pyqrcode 
-from pyqrcode import QRCode 
+import qrcode
 import json
 
 class ProfessorService(object):
@@ -62,9 +61,18 @@ class ProfessorService(object):
             print(e)
             raise e
     
-    def gerar_aula_qr_code(self, data):
-        url = pyqrcode.create(data, error='L', version=27, mode='binary')
-        url.png("templates/static/qr_code_aula.png", scale=6, module_color=[0, 0, 0, 128], background=[0xff, 0xff, 0xcc])
+    def gerar_aula_qr_code(self, data, path_to_save = "static"):
+    
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=4,
+        )
+        qr.add_data(data)
+        qr.make(fit=True)
+        img = qr.make_image(fill_color="black", back_color="white")
+        img.save(f'{path_to_save}/qrcode_test.png')
         return True
     
     def listar_professores(self, cookie):
